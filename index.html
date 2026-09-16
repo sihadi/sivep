@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SIVEP — AI-assisted precipitation quality control platform. Final Year Project by SIHADI Aya · EMSI × DGM (Maroc Météo).">
+  <meta property="og:title" content="SIVEP — Precipitation QC Platform">
+  <meta property="og:description" content="Hybrid AI + WMO rules · Human-in-the-loop · Built during internship at DGM (Maroc Météo)">
+  <meta property="og:image" content="assets/platform.png">
+  <title>SIVEP — Project Showcase</title>
+  <style>
+    :root {
+      --green: #0B5345;
+      --green-light: #117A65;
+      --gold: #C9A227;
+      --blue: #1A5276;
+      --bg: #F4F7F6;
+      --bg-top: #EAF2EF;
+      --surface: #FFFFFF;
+      --text: #1C2833;
+      --muted: #5D6D7E;
+      --border: #D5DBDB;
+      --sidebar-dark: #0E3D34;
+      --radius: 14px;
+      --shadow: 0 10px 40px rgba(11, 83, 69, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg) 35%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--green-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem 4rem; }
+    header {
+      background: linear-gradient(135deg, var(--sidebar-dark) 0%, var(--green) 55%, var(--green-light) 100%);
+      color: #F5F7F6;
+      border-bottom: 4px solid var(--gold);
+      padding: 1.5rem 0 2.5rem;
+    }
+    .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+    .logo-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .logo-row img { height: 52px; width: auto; background: rgba(255,255,255,0.95); border-radius: 8px; padding: 6px 10px; }
+    nav { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; font-size: 0.92rem; }
+    nav a { color: #D5F5E3; opacity: 0.95; }
+    nav a:hover { color: var(--gold); text-decoration: none; }
+    .hero { padding-top: 2rem; }
+    .badge {
+      display: inline-block; background: rgba(201,162,39,0.2); color: var(--gold);
+      border: 1px solid rgba(201,162,39,0.45); padding: 0.35rem 0.85rem; border-radius: 999px;
+      font-size: 0.82rem; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 1rem;
+    }
+    h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin-bottom: 0.75rem; }
+    .subtitle { font-size: 1.1rem; color: #D5F5E3; max-width: 720px; }
+    .principle { margin-top: 1rem; font-style: italic; color: var(--gold); font-size: 1rem; }
+    section { margin-top: 3rem; }
+    h2 {
+      font-size: 1.55rem; color: var(--green); margin-bottom: 0.35rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    h2::before {
+      content: ""; width: 5px; height: 1.4rem; background: var(--gold); border-radius: 3px;
+    }
+    .section-lead { color: var(--muted); margin-bottom: 1.25rem; max-width: 780px; }
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.25rem; box-shadow: var(--shadow);
+    }
+    .card .value { font-size: 1.85rem; font-weight: 700; color: var(--green); line-height: 1.2; }
+    .card .label { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
+    .video-section {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.5rem; box-shadow: var(--shadow);
+    }
+    .video-shell video {
+      width: 100%; border-radius: 10px; background: #000; border: 2px solid var(--green);
+    }
+    .video-placeholder {
+      text-align: center; padding: 3rem 1.5rem; background: linear-gradient(135deg, #EAF2EF, #F8FAF9);
+      border: 2px dashed var(--border); border-radius: 10px;
+    }
+    .play-icon {
+      width: 64px; height: 64px; margin: 0 auto 1rem; border-radius: 50%;
+      background: var(--green); color: white; display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; padding-left: 4px;
+    }
+    .muted { color: var(--muted); font-size: 0.92rem; }
+    .two-col {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;
+    }
+    .feature-list { list-style: none; }
+    .feature-list li {
+      padding: 0.65rem 0; border-bottom: 1px solid var(--border);
+      padding-left: 1.5rem; position: relative;
+    }
+    .feature-list li::before {
+      content: "✓"; position: absolute; left: 0; color: var(--green-light); font-weight: bold;
+    }
+    .pipeline-steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; margin-top: 1rem;
+    }
+    .step {
+      background: linear-gradient(180deg, #fff, #F8FAF9); border: 1px solid var(--border);
+      border-top: 3px solid var(--gold); border-radius: 10px; padding: 1rem; text-align: center;
+    }
+    .step strong { display: block; color: var(--green); margin-bottom: 0.25rem; }
+    .step span { font-size: 0.82rem; color: var(--muted); }
+    .gallery {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;
+    }
+    .gallery figure {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; box-shadow: var(--shadow);
+    }
+    .gallery img { width: 100%; display: block; aspect-ratio: 16/10; object-fit: cover; }
+    .gallery figcaption { padding: 0.65rem 0.85rem; font-size: 0.85rem; color: var(--muted); }
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .person {
+      background: var(--surface); border-left: 4px solid var(--gold); border-radius: var(--radius);
+      padding: 1rem 1.15rem; box-shadow: var(--shadow);
+    }
+    .person strong { color: var(--green); display: block; }
+    .person span { font-size: 0.88rem; color: var(--muted); }
+    .stack-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+    .tag {
+      background: rgba(17,122,101,0.1); color: var(--green); border: 1px solid rgba(17,122,101,0.25);
+      padding: 0.35rem 0.75rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600;
+    }
+    .workflow-img {
+      width: 100%; border-radius: var(--radius); border: 1px solid var(--border);
+      box-shadow: var(--shadow); margin-top: 1rem;
+    }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem; }
+    .btn {
+      display: inline-block; padding: 0.65rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.92rem;
+    }
+    .btn-primary { background: var(--gold); color: var(--text); border: none; }
+    .btn-secondary { background: transparent; color: var(--green); border: 2px solid var(--green); }
+    footer {
+      margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+      text-align: center; color: var(--muted); font-size: 0.88rem;
+    }
+    @media (max-width: 600px) {
+      .logo-row img { height: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="logo-row">
+        <img src="assets/emsi_logo.png" alt="EMSI logo">
+        <img src="assets/dgm_logo.png" alt="DGM logo">
+      </div>
+      <nav>
+        <a href="#demo">Live Demo</a>
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#platform">Platform</a>
+        <a href="#results">Results</a>
+        <a href="#team">Team</a>
+      </nav>
+      <div class="hero">
+        <span class="badge">Final Year Project · 2025 / 2026</span>
+        <h1>SIVEP</h1>
+        <p class="subtitle">
+          Integrated Verification &amp; Exploitation System for Precipitation —
+          an AI-assisted quality-control platform for hourly meteorological data,
+          developed during my internship at <strong>DGM (Maroc Météo)</strong> in partnership with <strong>EMSI</strong>.
+        </p>
+        <p class="principle">Rules frame · AI prioritizes · Experts decide.</p>
+        <p class="subtitle" style="margin-top:0.75rem;font-size:0.95rem;">SIHADI Aya · Computer Engineering · AI &amp; Data</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="demo">
+      <h2>Live Demo</h2>
+      <p class="section-lead">Watch the platform in action — upload, pipeline run, KPI review, anomaly detection and human validation.</p>
+      <div class="video-section">
+        
+        <div class="video-placeholder">
+          <div class="play-icon">▶</div>
+          <p><strong>Demo video coming soon</strong></p>
+          <p class="muted">Add <code>docs/linkedin/media/demo_live.mp4</code> then run<br>
+          <code>python scripts/generate_showcase.py</code></p>
+        </div>
+        
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#platform">Explore screenshots</a>
+          <a class="btn btn-secondary" href="#architecture">View architecture</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="overview">
+      <h2>Project at a Glance</h2>
+      <p class="section-lead">National precipitation series support hydrology, climate studies and operational forecasting. SIVEP automates detection while keeping climatologists in control.</p>
+      <div class="card-grid">
+        <div class="card"><div class="value">27,679</div><div class="label">Hourly observations (official DGM dataset)</div></div>
+        <div class="card"><div class="value">97.5%</div><div class="label">Temporal completeness</div></div>
+        <div class="card"><div class="value">2</div><div class="label">Pilot stations — Khemisset &amp; Sidi Kacem</div></div>
+        <div class="card"><div class="value">0.73</div><div class="label">Quality score (hybrid_dgm mode)</div></div>
+      </div>
+    </section>
+
+    <section id="architecture">
+      <h2>Hybrid Architecture</h2>
+      <p class="section-lead">A layered pipeline combining WMO/OMM regulatory QA/QC with machine learning — missing values and meteorological anomalies handled separately.</p>
+      <img class="workflow-img" src="assets/workflow.png" alt="SIVEP end-to-end workflow">
+      <div class="pipeline-steps">
+        <div class="step"><strong>OMM Rules</strong><span>WMO regulatory foundation · 25%</span></div>
+        <div class="step"><strong>MLQC-ST</strong><span>Spatiotemporal ML · 25%</span></div>
+        <div class="step"><strong>Isolation Forest</strong><span>Offline per station · 35%</span></div>
+        <div class="step"><strong>Supervised RF</strong><span>When labels exist · 15%</span></div>
+        <div class="step"><strong>hybrid_dgm</strong><span>0.65·s_pond + 0.35·s_vote · τ=0.52</span></div>
+      </div>
+      <div class="two-col" style="margin-top:1.5rem;">
+        <div class="card">
+          <h3 style="color:var(--green);margin-bottom:0.75rem;">Missing-value track</h3>
+          <ul class="feature-list">
+            <li>NULL, gaps &amp; PDF artifacts (0NULL)</li>
+            <li>KNN imputation with spatial neighbours</li>
+            <li>Separate from weather anomalies</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--green);margin-bottom:0.75rem;">Anomaly track</h3>
+          <ul class="feature-list">
+            <li>Multi-detector fusion (hybrid_dgm)</li>
+            <li>SHAP explainability for climatologists</li>
+            <li>Human-in-the-loop — raw data never silently overwritten</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="platform">
+      <h2>Operational Dashboard</h2>
+      <p class="section-lead">Seven Streamlit modules for climatologists — built with Python, PostgreSQL audit trail and institution-grade DGM theming.</p>
+      <div class="gallery">
+        <figure><img src="assets/platform.png" alt="Dashboard overview"><figcaption>Overview — KPIs &amp; quality synthesis</figcaption></figure>
+        <figure><img src="assets/anomalies.png" alt="Anomaly detection"><figcaption>Anomalies — hybrid scores &amp; flags</figcaption></figure>
+        <figure><img src="assets/ia_panel.png" alt="IA modes panel"><figcaption>IA modes — compare detection strategies</figcaption></figure>
+        <figure><img src="assets/validation.png" alt="Human validation"><figcaption>Validation queue — expert review</figcaption></figure>
+      </div>
+      <div class="stack-tags">
+        <span class="tag">Python 3.11+</span>
+        <span class="tag">Streamlit</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">pandas · numpy</span>
+        <span class="tag">scikit-learn</span>
+        <span class="tag">SHAP</span>
+        <span class="tag">Plotly</span>
+      </div>
+    </section>
+
+    <section id="results">
+      <h2>Results on Official DGM Dataset</h2>
+      <p class="section-lead">Benchmark across detection modes — hybrid_dgm selected for operational balance between recall and institutional trust.</p>
+      <figure style="margin-top:1rem;">
+        <img class="workflow-img" src="assets/heatmap.png" alt="Model comparison heatmap">
+      </figure>
+      <div class="card-grid" style="margin-top:1rem;">
+        <div class="card"><div class="value">49.5%</div><div class="label">Critical suspect rate (hybrid_dgm)</div></div>
+        <div class="card"><div class="value">716</div><div class="label">Temporal gaps detected</div></div>
+        <div class="card"><div class="value">7</div><div class="label">Missing values (Khemisset)</div></div>
+        <div class="card"><div class="value">100%</div><div class="label">Audit trail in PostgreSQL</div></div>
+      </div>
+    </section>
+
+    <section id="team">
+      <h2>Internship &amp; Supervision</h2>
+      <p class="section-lead">Developed during my internship at the Direction Générale de la Météorologie (DGM / Maroc Météo), working alongside national climatologists on real precipitation datasets.</p>
+      <div class="team-grid">
+        <div class="person"><strong>Dr. ABOUABID Hamza</strong><span>Academic supervisor · EMSI</span></div>
+        <div class="person"><strong>Meriem EL AOURI</strong><span>Professional supervisor · DGM</span></div>
+        <div class="person"><strong>Salma EL YABANI</strong><span>Professional supervisor · DGM</span></div>
+        <div class="person"><strong>Mme. FATHI Fadwa</strong><span>Jury member · EMSI</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Connect</h2>
+      <p class="section-lead">Open to feedback, opportunities and conversations on AI × climate data.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://www.linkedin.com/in/sihadi-aya/" target="_blank" rel="noopener">LinkedIn — SIHADI Aya</a>
+        <a class="btn btn-secondary" href="#demo">Watch demo again</a>
+      </div>
+    </section>
+
+    <footer>
+      <p><strong>SIVEP</strong> · Système Intégré de Vérification et d'Exploitation des Précipitations</p>
+      <p>EMSI × DGM (Maroc Météo) · SIHADI Aya · 2025 / 2026</p>
+      <p style="margin-top:0.5rem;font-size:0.8rem;">Showcase URL: https://sihadi.github.io/sivep/</p>
+    </footer>
+  </main>
+</body>
+</html>
